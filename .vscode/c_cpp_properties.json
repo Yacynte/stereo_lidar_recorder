@@ -3,11 +3,9 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/include", // Project's include directory
-                "/usr/include",              // System-wide include directory
-                "/usr/local/include",        // Additional include directory
-                "~/opencv/include"   // OpenCV include directory
-                // "/path/to/pcl/include"       // PCL include directory
+                "${workspaceFolder}/include/",
+                "/usr/include/**",
+                "/usr/local/include/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

@@ -3,8 +3,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/StereoLiDARRecorder.dir/src/LiDAR.cpp.o.d"
   "CMakeFiles/StereoLiDARRecorder.dir/src/StereoCamera.cpp.o"
   "CMakeFiles/StereoLiDARRecorder.dir/src/StereoCamera.cpp.o.d"
-  "CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.o"
-  "CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.o.d"
   "CMakeFiles/StereoLiDARRecorder.dir/src/main.cpp.o"
   "CMakeFiles/StereoLiDARRecorder.dir/src/main.cpp.o.d"
   "StereoLiDARRecorder"

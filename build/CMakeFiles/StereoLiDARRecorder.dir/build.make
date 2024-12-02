@@ -111,26 +111,11 @@ CMakeFiles/StereoLiDARRecorder.dir/src/LiDAR.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/StereoLiDARRecorder.dir/src/LiDAR.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/divan/stereo_lidar_recorder/src/LiDAR.cpp -o CMakeFiles/StereoLiDARRecorder.dir/src/LiDAR.cpp.s
 
-CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.o: CMakeFiles/StereoLiDARRecorder.dir/flags.make
-CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.o: /home/divan/stereo_lidar_recorder/src/Utils.cpp
-CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.o: CMakeFiles/StereoLiDARRecorder.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/divan/stereo_lidar_recorder/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.o -MF CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.o.d -o CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.o -c /home/divan/stereo_lidar_recorder/src/Utils.cpp
-
-CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/divan/stereo_lidar_recorder/src/Utils.cpp > CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.i
-
-CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/divan/stereo_lidar_recorder/src/Utils.cpp -o CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.s
-
 # Object files for target StereoLiDARRecorder
 StereoLiDARRecorder_OBJECTS = \
 "CMakeFiles/StereoLiDARRecorder.dir/src/main.cpp.o" \
 "CMakeFiles/StereoLiDARRecorder.dir/src/StereoCamera.cpp.o" \
-"CMakeFiles/StereoLiDARRecorder.dir/src/LiDAR.cpp.o" \
-"CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.o"
+"CMakeFiles/StereoLiDARRecorder.dir/src/LiDAR.cpp.o"
 
 # External object files for target StereoLiDARRecorder
 StereoLiDARRecorder_EXTERNAL_OBJECTS =
@@ -138,7 +123,6 @@ StereoLiDARRecorder_EXTERNAL_OBJECTS =
 StereoLiDARRecorder: CMakeFiles/StereoLiDARRecorder.dir/src/main.cpp.o
 StereoLiDARRecorder: CMakeFiles/StereoLiDARRecorder.dir/src/StereoCamera.cpp.o
 StereoLiDARRecorder: CMakeFiles/StereoLiDARRecorder.dir/src/LiDAR.cpp.o
-StereoLiDARRecorder: CMakeFiles/StereoLiDARRecorder.dir/src/Utils.cpp.o
 StereoLiDARRecorder: CMakeFiles/StereoLiDARRecorder.dir/build.make
 StereoLiDARRecorder: /usr/local/lib/libopencv_gapi.so.4.10.0
 StereoLiDARRecorder: /usr/local/lib/libopencv_highgui.so.4.10.0
@@ -148,15 +132,12 @@ StereoLiDARRecorder: /usr/local/lib/libopencv_photo.so.4.10.0
 StereoLiDARRecorder: /usr/local/lib/libopencv_stitching.so.4.10.0
 StereoLiDARRecorder: /usr/local/lib/libopencv_video.so.4.10.0
 StereoLiDARRecorder: /usr/local/lib/libopencv_videoio.so.4.10.0
-StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_apps.so
-StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_outofcore.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_people.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libboost_system.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libboost_iostreams.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libboost_regex.so
-StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libqhull.so
 StereoLiDARRecorder: /usr/lib/libOpenNI.so
 StereoLiDARRecorder: /usr/lib/libOpenNI2.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libvtkChartsCore-7.1.so.7.1p.1
@@ -183,22 +164,16 @@ StereoLiDARRecorder: /usr/local/lib/libopencv_features2d.so.4.10.0
 StereoLiDARRecorder: /usr/local/lib/libopencv_flann.so.4.10.0
 StereoLiDARRecorder: /usr/local/lib/libopencv_imgproc.so.4.10.0
 StereoLiDARRecorder: /usr/local/lib/libopencv_core.so.4.10.0
-StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_surface.so
-StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_keypoints.so
-StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_tracking.so
-StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_recognition.so
-StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_registration.so
-StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_stereo.so
+StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_visualization.so
+StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_io.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_segmentation.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_features.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_filters.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_sample_consensus.so
-StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_ml.so
-StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_visualization.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_search.so
-StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_kdtree.so
-StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_io.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_octree.so
+StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_kdtree.so
+StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_ml.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libpcl_common.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libvtkInteractionWidgets-7.1.so.7.1p.1
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libvtkFiltersModeling-7.1.so.7.1p.1
@@ -247,7 +222,7 @@ StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libX11.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libXext.so
 StereoLiDARRecorder: /usr/lib/x86_64-linux-gnu/libXt.so
 StereoLiDARRecorder: CMakeFiles/StereoLiDARRecorder.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/divan/stereo_lidar_recorder/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable StereoLiDARRecorder"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/divan/stereo_lidar_recorder/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable StereoLiDARRecorder"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/StereoLiDARRecorder.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

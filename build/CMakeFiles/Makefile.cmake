@@ -78,7 +78,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/lib/x86_64-linux-gnu/cmake/pcl/Modules/FindFLANN.cmake"
   "/usr/lib/x86_64-linux-gnu/cmake/pcl/Modules/FindOpenNI.cmake"
   "/usr/lib/x86_64-linux-gnu/cmake/pcl/Modules/FindOpenNI2.cmake"
-  "/usr/lib/x86_64-linux-gnu/cmake/pcl/Modules/FindQhull.cmake"
   "/usr/lib/x86_64-linux-gnu/cmake/pcl/PCLConfig.cmake"
   "/usr/lib/x86_64-linux-gnu/cmake/pcl/PCLConfigVersion.cmake"
   "/usr/local/lib/cmake/opencv4/OpenCVConfig-version.cmake"
