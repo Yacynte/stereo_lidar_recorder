@@ -6,5 +6,5 @@ CXX_DEFINES = -DDISABLE_LIBUSB_1_0 -DDISABLE_PCAP -DDISABLE_PNG -DvtkRenderingCo
 
 CXX_INCLUDES = -I/home/divan/stereo_lidar_recorder/include -isystem /usr/include/vtk-7.1 -isystem /usr/include/freetype2 -isystem /usr/local/include/opencv4 -isystem /usr/include/pcl-1.10 -isystem /usr/include/eigen3 -isystem /usr/include/ni -isystem /usr/include/openni2
 
-CXX_FLAGS = 
+CXX_FLAGS = -g
 

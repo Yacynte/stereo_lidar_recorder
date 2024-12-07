@@ -1,0 +1,39 @@
+# Target labels
+ Main
+ opencv_highgui
+ Module
+# Source files and their labels
+/home/divan/stereo_lidar_recorder/include/opencv/modules/highgui/include/opencv2/highgui.hpp
+ Main
+ opencv_highgui
+ Module
+/home/divan/stereo_lidar_recorder/include/opencv/modules/highgui/include/opencv2/highgui/highgui.hpp
+ Main
+ opencv_highgui
+ Module
+/home/divan/stereo_lidar_recorder/include/opencv/modules/highgui/include/opencv2/highgui/highgui_c.h
+ Main
+ opencv_highgui
+ Module
+/home/divan/stereo_lidar_recorder/include/opencv/modules/highgui/src/backend.cpp
+ Main
+ opencv_highgui
+ Module
+/home/divan/stereo_lidar_recorder/include/opencv/modules/highgui/src/window.cpp
+ Main
+ opencv_highgui
+ Module
+/home/divan/stereo_lidar_recorder/include/opencv/modules/highgui/src/roiSelector.cpp
+ Main
+ opencv_highgui
+ Module
+/home/divan/stereo_lidar_recorder/include/opencv/modules/highgui/src/window_gtk.cpp
+ Main
+ opencv_highgui
+ Module
+/home/divan/stereo_lidar_recorder/include/opencv/modules/highgui/src/precomp.hpp
+ Main
+ opencv_highgui
+ Module
+/home/divan/stereo_lidar_recorder/include/build/cvconfig.h
+/home/divan/stereo_lidar_recorder/include/build/opencv2/opencv_modules.hpp

@@ -13,6 +13,7 @@ include_directories(${OpenCV_INCLUDE_DIRS} ${PCL_INCLUDE_DIRS} ${CMAKE_SOURCE_DI
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
+set(CMAKE_BUILD_TYPE Debug)
 # Add executable and source files
 add_executable(StereoLiDARRecorder 
     src/main.cpp 
