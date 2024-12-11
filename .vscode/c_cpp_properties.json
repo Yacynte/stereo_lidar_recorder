@@ -1,17 +1,38 @@
 {
     "configurations": [
         {
-            "name": "Linux",
+            "name": "Linux-PC",
             "includePath": [
                 "${workspaceFolder}/include/",
                 "/usr/include/**"
-                // "/usr/local/include/**"
             ],
-            "defines": [],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c17",
             "cppStandard": "c++20",
-            "intelliSenseMode": "linux-gcc-x64"
+            "intelliSenseMode": "linux-gcc-x64",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/include/",
+                    "/usr/include/"
+                ]
+            }
+        },
+        {
+            "name": "Linux-Pi",
+            "includePath": [
+                "${workspaceFolder}/include/",
+                "${env:SYSROOT}/usr/include/**"
+            ],
+            "compilerPath": "${env:SYSROOT}/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "c++20",
+            "intelliSenseMode": "linux-gcc-arm",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/include/",
+                    "${env:SYSROOT}/include/"
+                ]
+            }
         }
     ],
     "version": 4

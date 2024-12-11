@@ -32,3 +32,8 @@
 *.app
 
 /build
+/build_pc
+/build_pi
+/data
+/kitti_images
+/pcl_pi

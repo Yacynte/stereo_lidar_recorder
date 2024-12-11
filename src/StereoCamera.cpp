@@ -1,14 +1,54 @@
 // StereoCamera.cpp
 #include "StereoCamera.h"
 
-StereoCamera::StereoCamera(int leftCamID, int rightCamID)
-    : leftCam(leftCamID), rightCam(rightCamID) {
-    leftCam.set(cv::CAP_PROP_FPS, 20);
-    rightCam.set(cv::CAP_PROP_FPS, 20);
+// Constructor: Open both left and right cameras
+StereoCamera::StereoCamera(int leftCamID, int rightCamID) {
+    leftCam.open(leftCamID);
+    rightCam.open(rightCamID);
+
+    if (!checkCameras()) {
+        std::cerr << "Failed to open one or both cameras." << std::endl;
+    }
 }
 
+// Destructor: Release camera resources when the object goes out of scope
+StereoCamera::~StereoCamera() {
+    leftCam.release();
+    rightCam.release();
+}
+
+// Captures a stereo pair of frames
 bool StereoCamera::captureFrames(cv::Mat& leftFrame, cv::Mat& rightFrame) {
-    return leftCam.read(leftFrame) && rightCam.read(rightFrame);
+    if (!leftCam.isOpened() || !rightCam.isOpened()) {
+        std::cerr << "Error: One or both cameras are not opened." << std::endl;
+        return false;
+    }
+
+    // Read a frame from both the left and right cameras
+    if (!leftCam.read(leftFrame)) {
+        std::cerr << "Error: Failed to capture left frame." << std::endl;
+        return false;
+    }
+
+    if (!rightCam.read(rightFrame)) {
+        std::cerr << "Error: Failed to capture right frame." << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
+// Checks if both cameras are opened successfully
+bool StereoCamera::checkCameras() {
+    if (!leftCam.isOpened()) {
+        std::cerr << "Error: Could not open left camera stream." << std::endl;
+    }
+
+    if (!rightCam.isOpened()) {
+        std::cerr << "Error: Could not open right camera stream." << std::endl;
+    }
+
+    return leftCam.isOpened() && rightCam.isOpened();
 }
 
 std::pair<cv::Mat, cv::Mat> VisualOdometry::RectifyImage(const cv::Mat& leftImage, const cv::Mat& rightImage) {
@@ -44,7 +84,7 @@ void VisualOdometry::reconstruct3D(const std::vector<cv::Point2f>& image_points,
         float z = depth.at<float>(static_cast<int>(v), static_cast<int>(u));
 
         // Ignore points with invalid depth
-        if (z > max_depth || z <= 0) {
+        if (z > max_depth) {
             outliers.push_back(i);
             continue;
         }
@@ -53,6 +93,7 @@ void VisualOdometry::reconstruct3D(const std::vector<cv::Point2f>& image_points,
         float y = z * (v - cy) / fy;
         points_3D.emplace_back(x, y, z);
     }
+    // std::cout << "image_points: " << image_points.size() << " points 3d: " << points_3D.size() << " outliers : " << outliers.size()  <<std::endl;
 }
 
 cv::Point3f VisualOdometry::computeMean3D(const std::vector<cv::Point3f>& points) {
@@ -77,6 +118,7 @@ bool VisualOdometry::motionEstimation(const std::vector<cv::Point2f>& image1_poi
     // Step 1: Reconstruct 3D points
     std::vector<cv::Point3f> points_3D;
     std::vector<size_t> outliers;
+    // std::cout<<"Motion Estimation, reconstruct 3d"<<std::endl;
     reconstruct3D(image1_points, depth, points_3D, outliers, max_depth);
 
     // Remove outliers
@@ -87,11 +129,29 @@ bool VisualOdometry::motionEstimation(const std::vector<cv::Point2f>& image1_poi
             filtered_image2_points.push_back(image2_points[i]);
             }
     }
+    // std::cout<<"Motion Estimation, Outliers removed"<<std::endl;
 
     // Step 2: Solve PnP with RANSAC
-    bool success = cv::solvePnPRansac(points_3D, filtered_image2_points, K1, cv::Mat(),
-                                      rvec, translation_vector, false, 100, 8.0, 0.99, cv::noArray());
+    // std::cout << "Number of points before outlier regection: "<< points_3D.size() <<std::endl;
+    // std::cout << "Number of points after outlier regection: "<< filtered_image2_points.size() <<std::endl;
 
+    // Convert to float as OpenCV expects these inputs to be in CV_32F
+    cv::Mat K1_float, D1_float, R_float, T_float, filtered_image2_points_, points_3D_ ;
+    K1.convertTo(K1_float, CV_32F);
+    D1.convertTo(D1_float, CV_32F);
+    // R.convertTo(R_float, CV_32F);
+    // T.convertTo(T_float, CV_32F);
+
+    // Make sure your points are also of type CV_32F
+    cv::Mat(points_3D).convertTo(points_3D_, CV_32F);
+    cv::Mat(filtered_image2_points).convertTo(filtered_image2_points_, CV_32F);
+
+    bool success = cv::solvePnPRansac(points_3D_, 
+                                    filtered_image2_points_, 
+                                    K1_float, D1_float, 
+                                    rvec, translation_vector, false, 100, 8.0, 0.99, cv::noArray());
+                
+    // std::cout << "points_3D_: " << R_float << std::endl;
     if (!success) {
         std::cerr << "Error: solvePnPRansac failed." << std::endl;
         return false;
@@ -99,6 +159,8 @@ bool VisualOdometry::motionEstimation(const std::vector<cv::Point2f>& image1_poi
 
     // Convert rotation vector to matrix
     cv::Rodrigues(rvec, rotation_matrix);
+
+
 
     // Step 3: Compute mean of contours in 3D if available
     // if (!contours.empty()) {
@@ -129,7 +191,10 @@ cv::Mat VisualOdometry::computeDisparity(const cv::Mat& left, const cv::Mat& rig
 
     // Create StereoSGBM object and set parameters directly in the create function
     // auto stereo = cv::StereoSGBM::create();
-    cv::Ptr<cv::StereoSGBM> stereo = cv::StereoSGBM::create(
+    // cv::Ptr<cv::StereoSGBM> 
+    // cv::Ptr<cv::StereoSGBM>
+    // std::cout<< "Init Stereo" <<std::endl;
+    auto stereo = cv::StereoSGBM::create(
         0,            // Min disparity
         4 * 16,       // Number of disparities (must be divisible by 16)
         9,            // Block size (odd number, typically 5 to 15)
@@ -141,24 +206,31 @@ cv::Mat VisualOdometry::computeDisparity(const cv::Mat& left, const cv::Mat& rig
         0,            // Speckle range
         cv::StereoSGBM::MODE_SGBM // Mode
     );
-    // Validate object creation
-    assert(stereo != nullptr && "StereoSGBM creation failed!");
-    stereo->compute(left, right, disparity);
 
     
-
+    // Validate object creation
+    // assert(!stereo.empty() && "StereoSGBM creation failed!");
+    cv::Mat disparity(left.size(), CV_16S);
+    // std::cout<< "Compute Disparity in Stereo" <<std::endl;
+    stereo->compute(left, right, disparity); 
     // Normalize disparity for visualization (optional)
+    // std::cout<< "Finish computing Disparity in Stereo" <<std::endl;
     cv::Mat disparity_normalized;
     cv::normalize(disparity, disparity_normalized, 0, 255, cv::NORM_MINMAX, CV_8U);
-
+    // std::cout<< "Finish Disparity in Stereo" <<std::endl;
+    
+    return disparity;
 }
 
-cv::Mat VisualOdometry::computeDepth(const cv::Mat& left, const cv::Mat& right, cv::Mat& depth){
+cv::Mat VisualOdometry::computeDepth(const cv::Mat& left, const cv::Mat& right){
     // const cv::Mat disparity = 
-    computeDisparity(left, right);
+    // std::cout<< "Compute Disparity" <<std::endl;
+    auto disparity = computeDisparity(left, right);
+    // std::cout<< "Finish Computing Disparity" <<std::endl;
     double focal_length_ = K1.at<double>(0, 0);
     double baseline_ = T.at<double>(0);
-    // cv::Mat depth(disparity.size(), CV_32F);
+    cv::Mat depth(disparity.size(), CV_32F);
+    // std::cout<< "Depth" <<std::endl;
     for (int y = 0; y < disparity.rows; ++y) {
         for (int x = 0; x < disparity.cols; ++x) {
             float d = static_cast<float>(disparity.at<short>(y, x)) / 16.0; // SGBM divides disparity by 16
@@ -169,7 +241,7 @@ cv::Mat VisualOdometry::computeDepth(const cv::Mat& left, const cv::Mat& right, 
             }
         }
     }
-    // return depth;
+    return depth;
 }
 
 // Feature matching function
@@ -203,16 +275,17 @@ void VisualOdometry::feature_matching(const cv::Mat& left_prev, const cv::Mat& l
 }
 
 
-std::pair<std::vector<double>, cv::Mat> VisualOdometry::StereoOdometry(const cv::Mat leftImage_pre, const cv::Mat leftImage_cur, 
-                                    const cv::Mat rightImage_pre, const cv::Mat rightImage_cur){
+std::pair<cv::Mat, cv::Mat> VisualOdometry::StereoOdometry(cv::Mat leftImage_pre, cv::Mat leftImage_cur, 
+                                    cv::Mat rightImage_pre, cv::Mat rightImage_cur){
 
     if (leftImage_pre.empty() || leftImage_cur.empty() || rightImage_pre.empty() || rightImage_cur.empty()) {
-        std::cerr << "Could not open the images!" << std::endl;
+        std::cerr << "One or all images are Empty!" << std::endl;
         cv::Mat rot = cv::Mat(3, 3, CV_64F, cv::Scalar(-1));
-        std::vector<double> trans = {-1, -1, -1};
+        cv::Mat trans =cv::Mat(3, 1, CV_64F, cv::Scalar(-1));
         return std::make_pair(trans, rot);
     }
      // Step 1: Rectify images
+    // std::cout<<"rectify Image"<<std::endl;
     auto rectifiedPre = RectifyImage(leftImage_pre, rightImage_pre);
     auto rectifiedCur = RectifyImage(leftImage_cur, rightImage_cur);
 
@@ -222,18 +295,57 @@ std::pair<std::vector<double>, cv::Mat> VisualOdometry::StereoOdometry(const cv:
     rightImageRec_cur = rectifiedCur.second;
 
     //Compute depth map of previous Image pair
-    computeDepth(leftImageRec_pre, rightImageRec_pre, depth_map);
+    // std::cout<<"Compute Depth"<<std::endl;
+    auto depth_map = computeDepth(leftImageRec_pre, rightImageRec_pre);
 
     // Vectors to hold the matched points
+    // std::cout<<"Init 2d points"<<std::endl;
     std::vector<cv::Point2f> pts_prev_L, pts_cur_L;
 
     // Call the feature matching function
+    // std::cout<<"feature matching"<<std::endl;
     feature_matching(leftImageRec_pre, leftImageRec_cur, pts_prev_L, pts_cur_L);
-
+    
+    // std::cout<<"Motion Estimation"<<std::endl;
     motionEstimation(pts_prev_L, pts_cur_L, depth_map);
 
     // totalTranslation.push_back(translation_vector);
     // totalRotation.push_back(rotation_matrix);
     return std::make_pair(translation_vector, rotation_matrix);
 
+}
+
+
+// Function to load all images from the folder into a vector
+bool ImageLoader::loadImages(std::vector<cv::Mat>& images) {
+    try {
+        // Create a vector to store file paths
+        std::vector<std::string> imagePaths;
+
+        // Collect all image paths matching the extension
+        for (const auto& entry : std::filesystem::directory_iterator(folderPath)) {
+            if (entry.is_regular_file() && entry.path().extension() == fileExtension) {
+                imagePaths.push_back(entry.path().string());
+            }
+        }
+
+        // Sort the image paths alphabetically
+        std::sort(imagePaths.begin(), imagePaths.end());
+
+        // Load images in sorted order
+        for (const auto& filePath : imagePaths) {
+            cv::Mat image = cv::imread(filePath, cv::IMREAD_COLOR);
+            if (image.empty()) {
+                std::cerr << "Failed to load image: " << filePath << std::endl;
+                continue; // Skip invalid files
+            }
+            images.push_back(image);
+            // Uncomment for debugging
+            // std::cout << "Loaded: " << filePath << std::endl;
+        }
+    } catch (const std::filesystem::filesystem_error& e) {
+        std::cerr << "Filesystem error: " << e.what() << std::endl;
+        return false;
+    }
+    return true;
 }
